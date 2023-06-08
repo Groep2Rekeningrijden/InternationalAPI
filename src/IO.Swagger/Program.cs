@@ -1,9 +1,16 @@
 using System;
 using System.IO;
+using System.Text.Json.Serialization;
 using IO.Swagger.Filters;
+using IO.Swagger.Models.RabbitMq;
+using IO.Swagger.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +41,20 @@ builder.Services.AddSwaggerGen(c =>
     // Use [ValidateModelState] on Actions to actually validate it in C# as well!
     c.OperationFilter<GeneratePathParamsValidationFilter>();
 });
+
+var rabbitMqSettings = builder.Configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
+builder.Services.AddMassTransit(mt => mt.AddMassTransit(x => {
+    x.UsingRabbitMq((cntxt, cfg) => {
+        cfg.Host(rabbitMqSettings.Uri, c => {
+            c.Username(rabbitMqSettings.UserName);
+            c.Password(rabbitMqSettings.Password);
+        });
+    });
+}));
+
+builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddScoped<IRoutingService, RoutingService>();
 
 var app = builder.Build();
 

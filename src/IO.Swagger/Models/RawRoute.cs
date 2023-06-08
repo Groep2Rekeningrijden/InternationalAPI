@@ -21,14 +21,14 @@ namespace IO.Swagger.Models;
 /// Unprocessed route data and the vehicle the route belongs to
 /// </summary>
 [DataContract]
-public partial class RawRoute : IEquatable<RawRoute>
-{ 
+public partial class RawRoute : IEquatable<RawRoute>, IRawRoute
+{
     /// <summary>
     /// Gets or Sets Vehicle
     /// </summary>
     [Required]
 
-    [DataMember(Name="vehicle")]
+    [DataMember(Name = "vehicle")]
     public Vehicle Vehicle { get; set; }
 
     /// <summary>
@@ -36,7 +36,7 @@ public partial class RawRoute : IEquatable<RawRoute>
     /// </summary>
     [Required]
 
-    [DataMember(Name="points")]
+    [DataMember(Name = "points")]
     public List<Point> Points { get; set; }
 
     /// <summary>
@@ -84,12 +84,12 @@ public partial class RawRoute : IEquatable<RawRoute>
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
 
-        return 
+        return
             (
                 Vehicle == other.Vehicle ||
                 Vehicle != null &&
                 Vehicle.Equals(other.Vehicle)
-            ) && 
+            ) &&
             (
                 Points == other.Points ||
                 Points != null &&

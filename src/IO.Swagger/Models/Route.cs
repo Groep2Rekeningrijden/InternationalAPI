@@ -20,7 +20,7 @@ namespace IO.Swagger.Models;
 /// A calculated route with vehicle identifier, total price and a series of OSM nodes and segment prices.
 /// </summary>
 [DataContract]
-public partial class Route : IEquatable<Route>
+public partial class Route : IEquatable<Route>, IRoute
 { 
     /// <summary>
     /// The ID of the vehicle in the vehicle&#x27;s country of origin&#x27;s system

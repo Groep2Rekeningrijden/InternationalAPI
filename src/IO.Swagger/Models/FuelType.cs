@@ -24,39 +24,40 @@ public enum FuelType
     /// Enum PetrolEnum for Petrol
     /// </summary>
     [EnumMember(Value = "Petrol")]
-    PetrolEnum = 0,
+    Petrol = 0,
     /// <summary>
     /// Enum DieselEnum for Diesel
     /// </summary>
     [EnumMember(Value = "Diesel")]
-    DieselEnum = 1,
+    Diesel = 1,
     /// <summary>
     /// Enum ElectricityEnum for Electricity
     /// </summary>
     [EnumMember(Value = "Electricity")]
-    ElectricityEnum = 2,
+    Electricity = 2,
     /// <summary>
     /// Enum LPGEnum for LPG
     /// </summary>
     [EnumMember(Value = "LPG")]
-    LPGEnum = 3,
+    LPG = 3,
     /// <summary>
     /// Enum CNGEnum for CNG
     /// </summary>
     [EnumMember(Value = "CNG")]
-    CNGEnum = 4,
+    CNG = 4,
     /// <summary>
     /// Enum AlcoholEnum for Alcohol
     /// </summary>
     [EnumMember(Value = "Alcohol")]
-    AlcoholEnum = 5,
+    Alcohol = 5,
     /// <summary>
     /// Enum LNGEnum for LNG
     /// </summary>
     [EnumMember(Value = "LNG")]
-    LNGEnum = 6,
+    LNG = 6,
     /// <summary>
     /// Enum HydrogenEnum for Hydrogen
     /// </summary>
     [EnumMember(Value = "Hydrogen")]
-    HydrogenEnum = 7          }
+    Hydrogen = 7          
+}

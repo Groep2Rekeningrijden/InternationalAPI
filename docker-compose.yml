@@ -5,4 +5,11 @@
       context: .
       dockerfile: src/IO.Swagger/Dockerfile
     ports:
-      - 5000:80
+      - 5060:80
+    networks:
+      - docker_rekeningrijden
+
+networks:
+  docker_rekeningrijden:
+    external: true
+  

@@ -24,124 +24,124 @@ public enum VehicleClassification
     /// Enum LEnum for L
     /// </summary>
     [EnumMember(Value = "L")]
-    LEnum = 0,
+    L = 0,
     /// <summary>
     /// Enum L1Enum for L1
     /// </summary>
     [EnumMember(Value = "L1")]
-    L1Enum = 1,
+    L1 = 1,
     /// <summary>
     /// Enum L2Enum for L2
     /// </summary>
     [EnumMember(Value = "L2")]
-    L2Enum = 2,
+    L2 = 2,
     /// <summary>
     /// Enum L3Enum for L3
     /// </summary>
     [EnumMember(Value = "L3")]
-    L3Enum = 3,
+    L3 = 3,
     /// <summary>
     /// Enum L4Enum for L4
     /// </summary>
     [EnumMember(Value = "L4")]
-    L4Enum = 4,
+    L4 = 4,
     /// <summary>
     /// Enum L5Enum for L5
     /// </summary>
     [EnumMember(Value = "L5")]
-    L5Enum = 5,
+    L5 = 5,
     /// <summary>
     /// Enum L6Enum for L6
     /// </summary>
     [EnumMember(Value = "L6")]
-    L6Enum = 6,
+    L6 = 6,
     /// <summary>
     /// Enum L7Enum for L7
     /// </summary>
     [EnumMember(Value = "L7")]
-    L7Enum = 7,
+    L7 = 7,
     /// <summary>
     /// Enum MEnum for M
     /// </summary>
     [EnumMember(Value = "M")]
-    MEnum = 8,
+    M = 8,
     /// <summary>
     /// Enum M1Enum for M1
     /// </summary>
     [EnumMember(Value = "M1")]
-    M1Enum = 9,
+    M1 = 9,
     /// <summary>
     /// Enum M2Enum for M2
     /// </summary>
     [EnumMember(Value = "M2")]
-    M2Enum = 10,
+    M2 = 10,
     /// <summary>
     /// Enum M3Enum for M3
     /// </summary>
     [EnumMember(Value = "M3")]
-    M3Enum = 11,
+    M3 = 11,
     /// <summary>
     /// Enum NEnum for N
     /// </summary>
     [EnumMember(Value = "N")]
-    NEnum = 12,
+    N = 12,
     /// <summary>
     /// Enum N1Enum for N1
     /// </summary>
     [EnumMember(Value = "N1")]
-    N1Enum = 13,
+    N1 = 13,
     /// <summary>
     /// Enum N2Enum for N2
     /// </summary>
     [EnumMember(Value = "N2")]
-    N2Enum = 14,
+    N2 = 14,
     /// <summary>
     /// Enum N3Enum for N3
     /// </summary>
     [EnumMember(Value = "N3")]
-    N3Enum = 15,
+    N3 = 15,
     /// <summary>
     /// Enum OEnum for O
     /// </summary>
     [EnumMember(Value = "O")]
-    OEnum = 16,
+    O = 16,
     /// <summary>
     /// Enum O1Enum for O1
     /// </summary>
     [EnumMember(Value = "O1")]
-    O1Enum = 17,
+    O1 = 17,
     /// <summary>
     /// Enum O2Enum for O2
     /// </summary>
     [EnumMember(Value = "O2")]
-    O2Enum = 18,
+    O2 = 18,
     /// <summary>
     /// Enum O3Enum for O3
     /// </summary>
     [EnumMember(Value = "O3")]
-    O3Enum = 19,
+    O3 = 19,
     /// <summary>
     /// Enum O4Enum for O4
     /// </summary>
     [EnumMember(Value = "O4")]
-    O4Enum = 20,
+    O4 = 20,
     /// <summary>
     /// Enum TEnum for T
     /// </summary>
     [EnumMember(Value = "T")]
-    TEnum = 21,
+    T = 21,
     /// <summary>
     /// Enum REnum for R
     /// </summary>
     [EnumMember(Value = "R")]
-    REnum = 22,
+    R = 22,
     /// <summary>
     /// Enum SEnum for S
     /// </summary>
     [EnumMember(Value = "S")]
-    SEnum = 23,
+    S = 23,
     /// <summary>
     /// Enum GEnum for G
     /// </summary>
     [EnumMember(Value = "G")]
-    GEnum = 24          }
+    G = 24          }

@@ -24,6 +24,20 @@ namespace IO.Swagger.Controllers;
 [Route("[controller]")]
 public class RoutingApiController : ControllerBase
 { 
+    private readonly IRoutingService _routingService;
+
+    public RoutingApiController(IRoutingService service)
+    {
+        _routingService = service;
+    }
+
+
+
+
+
+
+
+
     /// <summary>
     /// Return processed route
     /// </summary>
@@ -57,12 +71,15 @@ public class RoutingApiController : ControllerBase
     [Route("/submit-raw")]
     [ValidateModelState]
     [SwaggerOperation("SubmitRaw")]
-    public async Task<IActionResult> SubmitRaw([FromBody]RawRoute body, [FromQuery][Required()][RegularExpression("/[A-Z]{2}/")]string cc)
-    { 
-        //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        return Ok();
-
-        //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        // return StatusCode(400);
+    public async Task<IActionResult> SubmitRaw([FromBody]RawRoute body, [FromQuery][Required()][RegularExpression("[aA-zZ]{2}")]string cc)
+    {
+        try
+        {
+            if (_routingService.Routing(cc, body)) return Ok(); return BadRequest();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
