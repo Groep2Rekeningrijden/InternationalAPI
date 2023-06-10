@@ -8,7 +8,7 @@ namespace IO.Swagger.Consumers
     /// <summary>
     /// 
     /// </summary>
-    public class NLRouteConsumer : IConsumer<NLRouteDTO>
+    public class LURouteConsumer : IConsumer<LURouteDTO>
     {
         private readonly IRoutingService _routingService;
 
@@ -16,7 +16,7 @@ namespace IO.Swagger.Consumers
         /// 
         /// </summary>
         /// <param name="routingService"></param>
-        public NLRouteConsumer(IRoutingService routingService)
+        public LURouteConsumer(IRoutingService routingService)
         {
             _routingService = routingService;
         }
@@ -26,14 +26,14 @@ namespace IO.Swagger.Consumers
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public async Task Consume(ConsumeContext<NLRouteDTO> context)
+        public async Task Consume(ConsumeContext<LURouteDTO> context)
         {
-            IRoute dto = new NLRouteDTO();
+            IRoute dto = new LURouteDTO();
 
             dto.Segments = context.Message.Segments;
             dto.PriceTotal = context.Message.PriceTotal;
             dto.Id = context.Message.Id;
-            string cc = "NL";
+            string cc = "LU";
 
             await _routingService.Processed(cc, dto);
         }

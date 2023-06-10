@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Json.Serialization;
+using IO.Swagger.Consumers;
 using IO.Swagger.Filters;
 using IO.Swagger.Models.RabbitMq;
 using IO.Swagger.Services;
@@ -44,10 +45,23 @@ builder.Services.AddSwaggerGen(c =>
 
 var rabbitMqSettings = builder.Configuration.GetSection(nameof(RabbitMqSettings)).Get<RabbitMqSettings>();
 builder.Services.AddMassTransit(mt => mt.AddMassTransit(x => {
-    x.UsingRabbitMq((cntxt, cfg) => {
+
+    mt.AddConsumer<NLRouteConsumer>();
+    mt.AddConsumer<LURouteConsumer>();
+
+    x.UsingRabbitMq((ctx, cfg) => {
         cfg.Host(rabbitMqSettings.Uri, c => {
             c.Username(rabbitMqSettings.UserName);
             c.Password(rabbitMqSettings.Password);
+        });
+        cfg.ReceiveEndpoint("NLRoute", c =>
+        {
+            c.ConfigureConsumer<NLRouteConsumer>(ctx);
+
+        });
+        cfg.ReceiveEndpoint("LURoute", c =>
+        {
+            c.ConfigureConsumer<NLRouteConsumer>(ctx);
         });
     });
 }));

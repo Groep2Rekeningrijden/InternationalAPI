@@ -75,6 +75,4 @@ public class RoutingService : IRoutingService
 
         var responseString = await response.Content.ReadAsStringAsync();
     }
-
-
 }
