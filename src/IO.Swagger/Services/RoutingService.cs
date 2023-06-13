@@ -4,8 +4,10 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AutoMapper;
 using IO.Swagger.DTOS;
 using IO.Swagger.Models;
+using LTS.DTOs;
 using MassTransit;
 
 
@@ -17,15 +19,17 @@ namespace IO.Swagger.Services;
 public class RoutingService : IRoutingService
 {
     private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IMapper _mapper;
     private static readonly HttpClient client = new HttpClient();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="endpoint"></param>
-    public RoutingService(IPublishEndpoint endpoint) 
+    public RoutingService(IPublishEndpoint endpoint, IMapper mapper) 
 	{
 		_publishEndpoint = endpoint;		
+        _mapper = mapper;
 	}
 	
 	/// <summary>
@@ -34,7 +38,7 @@ public class RoutingService : IRoutingService
 	/// <param name="cc"></param>
 	/// <param name="route"></param>
 	/// <returns></returns>
-	public bool Routing(string cc, RawRoute route)
+	public async Task Routing(string cc, RawRoute route)
 	{
 		IRawRoute dto = null;
 		switch (cc.ToLower())
@@ -43,17 +47,15 @@ public class RoutingService : IRoutingService
                 dto = new NLRawDTO();
                 dto.Points = route.Points;
                 dto.Vehicle = route.Vehicle;
-                _publishEndpoint.Publish<NLRawDTO>(dto);
+                await _publishEndpoint.Publish<NLRawDTO>(dto);
                 break;
 			case "lu":
                 dto = new LURawDTO();
                 dto.Points = route.Points;
                 dto.Vehicle = route.Vehicle;
-                _publishEndpoint.Publish<LURawDTO>(dto);
+                await _publishEndpoint.Publish<LURawDTO>(dto);
                 break;
         }
-		if (dto == null) { return false; }
-        return true;
     }
 
     /// <summary>
@@ -64,15 +66,63 @@ public class RoutingService : IRoutingService
     /// <returns></returns>
 	public async Task Processed(string cc, IRoute dto)
 	{
-        var baseUrl = "http://baseurl.com";
+        var Url = "";
 
         using StringContent jsonContent = new(
         JsonSerializer.Serialize(dto),
         Encoding.UTF8,
         "application/json");
 
-        var response = await client.PostAsync(baseUrl + "/" + cc, jsonContent);
+        switch (cc)
+        {
+            case ("LU"):
+                Url = "http://34.159.70.126/api/return-processed?cc=BE";
+                break;
+            case ("NL"):
+                Url = "http://<IPHere>/api/return-processed?cc=BE";
+                break;
+        }
+
+        var response = await client.PostAsync(Url, jsonContent);
 
         var responseString = await response.Content.ReadAsStringAsync();
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="route"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task ReturnProcessed(Route route)
+    {
+       await _publishEndpoint.Publish<RouteDTO>(ConvertToDTO(route));
+    }
+
+    private RouteDTO ConvertToDTO(Route route)
+    {
+        var dto = new RouteDTO();
+        var segments = new List<SegmentDTO>();
+
+        dto.Id = route.Id.Value;
+        dto.PriceTotal = route.PriceTotal.Value;
+
+        foreach (var seg in route.Segments)
+        {
+            var segment = new SegmentDTO();
+
+            segment.Time = seg.Time.Value;
+            segment.Price = seg.Price.Value;
+            segment.Start = _mapper.Map<NodeDTO>(seg.Start);
+            segment.Way = _mapper.Map<WayDTO>(seg.Way);
+            segment.End = _mapper.Map<NodeDTO>(seg.End);
+            segments.Add(segment);
+        }
+
+        dto.Segments = segments;
+        return dto;
+    }
+
+
+
 }

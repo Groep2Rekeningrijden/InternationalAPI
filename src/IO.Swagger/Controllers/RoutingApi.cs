@@ -14,6 +14,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using IO.Swagger.Attributes;
 using IO.Swagger.Models;
+using MassTransit;
+using LTS.DTOs;
 
 namespace IO.Swagger.Controllers;
 
@@ -21,22 +23,22 @@ namespace IO.Swagger.Controllers;
 /// 
 /// </summary>
 [ApiController]
-[Route("[controller]")]
+[Route("/api")]
 public class RoutingApiController : ControllerBase
 { 
     private readonly IRoutingService _routingService;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public RoutingApiController(IRoutingService service)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="service"></param>
+    /// <param name="endpoint"></param>
+    public RoutingApiController(IRoutingService service, IPublishEndpoint endpoint)
     {
         _routingService = service;
+        _publishEndpoint = endpoint;
     }
-
-
-
-
-
-
-
 
     /// <summary>
     /// Return processed route
@@ -50,13 +52,17 @@ public class RoutingApiController : ControllerBase
     [Route("/return-processed")]
     [ValidateModelState]
     [SwaggerOperation("StoreProcessed")]
-    public async Task<IActionResult> StoreProcessed([FromBody]Route body, [FromQuery][Required()][RegularExpression("/[A-Z]{2}/")]string cc)
-    { 
-        //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        return Ok();
-
-        //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-        // return StatusCode(400);
+    public async Task<IActionResult> StoreProcessed([FromBody]Route body, [FromQuery][Required()][RegularExpression("[A-Z]{2}")]string cc)
+    {
+        try
+        {
+            await _routingService.ReturnProcessed(body);
+            return Ok("Return response Processed!");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     /// <summary>
@@ -75,7 +81,8 @@ public class RoutingApiController : ControllerBase
     {
         try
         {
-            if (_routingService.Routing(cc, body)) return Ok(); return BadRequest();
+            await _routingService.Routing(cc, body);
+            return Ok("Coordinates received succesfully");
         }
         catch (Exception ex)
         {

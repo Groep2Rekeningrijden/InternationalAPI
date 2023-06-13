@@ -10,7 +10,7 @@ public interface IRoutingService
     /// <param name="cc"></param>
     /// <param name="route"></param>
     /// <returns></returns>
-    bool Routing(string cc, RawRoute route);
+    Task Routing(string cc, RawRoute route);
 
     /// <summary>
     /// 
@@ -19,5 +19,15 @@ public interface IRoutingService
     /// <param name="dto"></param>
     /// <returns></returns>
     public Task Processed(string cc, IRoute dto);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="route"></param>
+    /// <returns></returns>
+    Task ReturnProcessed(Route route);
+
+
+
 
 }
