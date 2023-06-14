@@ -8,6 +8,7 @@ using IO.Swagger.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -19,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHealthChecks();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -26,7 +28,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("0.4.0", new OpenApiInfo
     {
         Version = "0.4.0",
-        Title = "Rekeningrijden Belgium API",
+        Title = "Rekeningrijden Belgium API  v3",
         Description = "Rekeningrijden Belgium API (.NET Core 7.0)",
         Contact = new OpenApiContact()
         {
@@ -84,7 +86,15 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials()); // allow credentials
-app.UseHttpsRedirection();
+    
+// app.UseHttpsRedirection();
+// app.UseForwardedHeaders();
+// app.MapHealthChecks("/");
+app.MapHealthChecks("/");
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
 app.MapControllers();
 
