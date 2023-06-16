@@ -56,7 +56,7 @@ public class RoutingApiController : ControllerBase
         try
         {
             Console.WriteLine("Processed results from: " + cc);
-            Console.WriteLine(body);
+            Console.WriteLine("ID = " + body.Id + " -- " + " price total =  " + body.PriceTotal + " -- " + "Count segments = " + body.Segments.Count);
             await _routingService.ReturnProcessed(body);
             return Ok("Return response Processed!");
         }
@@ -90,6 +90,8 @@ public class RoutingApiController : ControllerBase
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Error message:");
+            Console.WriteLine(ex.Message);
             return BadRequest(ex.Message);
         }
     }

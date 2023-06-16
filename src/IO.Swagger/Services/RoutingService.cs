@@ -9,7 +9,7 @@ using IO.Swagger.DTOS;
 using IO.Swagger.Models;
 using LTS.DTOs;
 using MassTransit;
-
+using Newtonsoft.Json;
 
 namespace IO.Swagger.Services;
 
@@ -71,12 +71,14 @@ public class RoutingService : IRoutingService
         var Url = "";
 
         using StringContent jsonContent = new(
-        JsonSerializer.Serialize(dto),
+        System.Text.Json.JsonSerializer.Serialize(dto),
         Encoding.UTF8,
         "application/json");
 
+        var log = JsonConvert.SerializeObject(dto, Formatting.Indented);
+
         Console.WriteLine("Return object:");
-        Console.WriteLine(jsonContent);
+        Console.WriteLine(log);
 
         switch (cc)
         {
@@ -84,15 +86,23 @@ public class RoutingService : IRoutingService
                 Url = "http://34.159.70.126/api/return-processed?cc=BE";
                 break;
             case ("NL"):
-                Url = "http://34.140.232.108/api/route/return-processed/BE";
+                Url = "http://34.140.232.108/api/invoice/return-processed/BE";
                 break;
         }
 
         Console.WriteLine("Target URL: " + Url);
-        var response = await client.PostAsync(Url, jsonContent);
 
-        var responseString = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(responseString);  
+        try
+        {
+            var response = await client.PostAsync(Url, jsonContent);
+            var responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Response from call: " + responseString);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }      
     }
 
     /// <summary>
