@@ -56,11 +56,14 @@ public class RoutingApiController : ControllerBase
     {
         try
         {
+            Console.WriteLine(body);
             await _routingService.ReturnProcessed(body);
             return Ok("Return response Processed!");
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Error message:");
+            Console.WriteLine(ex.Message);
             return BadRequest(ex.Message);
         }
     }
@@ -81,6 +84,8 @@ public class RoutingApiController : ControllerBase
     {
         try
         {
+            Console.WriteLine(body);
+            Console.WriteLine(cc);
             await _routingService.Routing(cc, body);
             return Ok("Coordinates received succesfully");
         }

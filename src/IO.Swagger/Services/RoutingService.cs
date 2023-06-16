@@ -48,12 +48,14 @@ public class RoutingService : IRoutingService
                 dto.Points = route.Points;
                 dto.Vehicle = route.Vehicle;
                 await _publishEndpoint.Publish<NLRawDTO>(dto);
+                Console.WriteLine("Send to NL QUEUE");
                 break;
 			case "lu":
                 dto = new LURawDTO();
                 dto.Points = route.Points;
                 dto.Vehicle = route.Vehicle;
                 await _publishEndpoint.Publish<LURawDTO>(dto);
+                Console.WriteLine("Send to LU QUEUE");
                 break;
         }
     }
@@ -73,6 +75,9 @@ public class RoutingService : IRoutingService
         Encoding.UTF8,
         "application/json");
 
+        Console.WriteLine("Return object:");
+        Console.WriteLine(jsonContent);
+
         switch (cc)
         {
             case ("LU"):
@@ -83,9 +88,11 @@ public class RoutingService : IRoutingService
                 break;
         }
 
+        Console.WriteLine("Target URL: " + Url);
         var response = await client.PostAsync(Url, jsonContent);
 
         var responseString = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(responseString);  
     }
 
     /// <summary>
@@ -114,7 +121,7 @@ public class RoutingService : IRoutingService
             segment.Time = seg.Time.Value;
             segment.Price = seg.Price.Value;
             segment.Start = _mapper.Map<NodeDTO>(seg.Start);
-            segment.Way = _mapper.Map<WayDTO>(seg.Way);
+            segment.Way = new WayDTO();
             segment.End = _mapper.Map<NodeDTO>(seg.End);
             segments.Add(segment);
         }
