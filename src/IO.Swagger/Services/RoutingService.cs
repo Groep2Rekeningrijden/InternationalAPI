@@ -84,7 +84,7 @@ public class RoutingService : IRoutingService
                 Url = "http://34.159.70.126/api/return-processed?cc=BE";
                 break;
             case ("NL"):
-                Url = "http://34.140.150.168/api/route/return-processed/BE";
+                Url = "http://34.140.232.108/api/route/return-processed/BE";
                 break;
         }
 
