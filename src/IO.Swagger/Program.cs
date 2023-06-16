@@ -63,7 +63,7 @@ builder.Services.AddMassTransit(mt => mt.AddMassTransit(x => {
         });
         cfg.ReceiveEndpoint("LURoute", c =>
         {
-            c.ConfigureConsumer<NLRouteConsumer>(ctx);
+            c.ConfigureConsumer<LURouteConsumer>(ctx);
         });
     });
 }));
