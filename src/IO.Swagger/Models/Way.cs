@@ -25,7 +25,7 @@ public partial class Way : IEquatable<Way>
     /// </summary>
 
     [DataMember(Name="id")]
-    public int? Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Returns the string presentation of the object

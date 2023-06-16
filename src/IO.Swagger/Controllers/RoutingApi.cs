@@ -50,7 +50,6 @@ public class RoutingApiController : ControllerBase
     /// <response code="400">invalid input</response>
     [HttpPost]
     [Route("/return-processed")]
-    [ValidateModelState]
     [SwaggerOperation("StoreProcessed")]
     public async Task<IActionResult> StoreProcessed([FromBody]Route body, [FromQuery][Required()][RegularExpression("[A-Z]{2}")]string cc)
     {
@@ -78,7 +77,6 @@ public class RoutingApiController : ControllerBase
     /// <response code="400">invalid input</response>
     [HttpPost]
     [Route("/submit-raw")]
-    [ValidateModelState]
     [SwaggerOperation("SubmitRaw")]
     public async Task<IActionResult> SubmitRaw([FromBody]RawRoute body, [FromQuery][Required()][RegularExpression("[aA-zZ]{2}")]string cc)
     {
