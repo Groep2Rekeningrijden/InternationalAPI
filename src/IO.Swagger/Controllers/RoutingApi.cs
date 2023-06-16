@@ -55,6 +55,7 @@ public class RoutingApiController : ControllerBase
     {
         try
         {
+            Console.WriteLine("Processed results from: " + cc);
             Console.WriteLine(body);
             await _routingService.ReturnProcessed(body);
             return Ok("Return response Processed!");

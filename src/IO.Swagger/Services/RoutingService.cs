@@ -103,6 +103,7 @@ public class RoutingService : IRoutingService
     /// <exception cref="NotImplementedException"></exception>
     public async Task ReturnProcessed(Route route)
     {
+        Console.WriteLine("before publish to queue: " + route);
        await _publishEndpoint.Publish<RouteDTO>(ConvertToDTO(route));
     }
 
