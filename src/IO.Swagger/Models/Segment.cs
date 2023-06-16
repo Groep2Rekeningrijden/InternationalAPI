@@ -25,7 +25,7 @@ public partial class Segment : IEquatable<Segment>
     /// </summary>
 
     [DataMember(Name="time")]
-    public DateTime? Time { get; set; }
+    public string? Time { get; set; }
 
     /// <summary>
     /// Gets or Sets Price

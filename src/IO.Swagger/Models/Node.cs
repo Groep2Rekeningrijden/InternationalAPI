@@ -25,7 +25,7 @@ public partial class Node : IEquatable<Node>
     /// </summary>
 
     [DataMember(Name="id")]
-    public int? Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Gets or Sets Lat

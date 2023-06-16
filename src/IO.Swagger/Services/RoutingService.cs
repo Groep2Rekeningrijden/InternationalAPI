@@ -118,7 +118,7 @@ public class RoutingService : IRoutingService
         {
             var segment = new SegmentDTO();
 
-            segment.Time = seg.Time.Value;
+            segment.Time = seg.Time;
             segment.Price = seg.Price.Value;
             segment.Start = _mapper.Map<NodeDTO>(seg.Start);
             segment.Way = new WayDTO();

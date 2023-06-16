@@ -4,7 +4,7 @@ namespace LTS.DTOs;
 
 public class SegmentDTO
 {
-    public DateTime Time { get; set; }
+    public string Time { get; set; }
 
     public decimal Price { get; set; }
 
